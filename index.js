@@ -40,8 +40,13 @@ function AnvilConnectKeys (directory) {
  */
 
 function generateKeyPairs () {
-  AnvilConnectKeys.generateKeyPair(this.sig.pub, this.sig.prv)
-  AnvilConnectKeys.generateKeyPair(this.enc.pub, this.enc.prv)
+  var done = false
+  while (!done) {
+    // sig and enc keypair generation is an atomic action
+    AnvilConnectKeys.generateKeyPair(this.sig.pub, this.sig.prv)
+    AnvilConnectKeys.generateKeyPair(this.enc.pub, this.enc.prv)
+    done = true
+  }
 }
 
 AnvilConnectKeys.prototype.generateKeyPairs = generateKeyPairs
